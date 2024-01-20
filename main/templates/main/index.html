@@ -10,7 +10,10 @@
 <body>
     <div id="PLAY"></div>
     <div>
-        <a id="logout" href="/logout" data-bs-toggle="tooltip" data-bs-placement="left" title="Logout"><img class="icon zoom" src="{% static 'main/key.png' %}"></a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <span onclick="this.parentNode.submit();"><span id="logout" data-bs-toggle="tooltip" data-bs-placement="left" title="Logout"><img class="icon zoom" src="{% static 'main/key.png' %}"></span></span>
+        </form>
     </div>
     <div id="NAV">
         <table>

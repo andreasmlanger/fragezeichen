@@ -28,6 +28,10 @@
     right: 20px;
   }
 
+  #logout {
+    cursor: pointer;
+  }
+
   .zoom {
     transition: transform .1s;
   }
