@@ -1,0 +1,193 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %} Die drei ??? {% endblock %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'core/style.css' %}">
+{% endblock %}
+
+{% block content %}
+<body>
+    <div id="PLAY"></div>
+    <div>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <span onclick="this.parentNode.submit();"><span id="logout" data-bs-toggle="tooltip" data-bs-placement="left" title="Logout"><img class="icon zoom" src="{% static 'core/key.png' %}"></span></span>
+        </form>
+    </div>
+    <div id="NAV">
+        <table>
+            {% for e in E %}
+                <tr>
+                    <td><img class="zoom clickable" id="cover{{e.NUM}}" style="{% if e.CHK %} filter:grayscale(0%) {% else %} filter:grayscale(100%) {% endif %}" onclick="changeCover('{{e.NUM}}')" src="{% static 'core/thumbnails/' %}{{e.NUM}}.jpg" width="40" height="40"></td>
+                    <td class="clickable" onclick="openTitle('{{e.NUM}}')"><span>{{e.NUM}}</span><span class="hide-on-mobile"> - Die drei ???<br>{{e.TIT}}</span></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div id="CONTENT" class="main">
+        <div style="min-height: 240px">
+            <img class="cover-image" id="COV" src="">
+            <p id="SUM" align="justify"></p>
+        </div>
+        <hr>
+        <table><tr>
+            <td><b>Veröffentlichung</b></td>
+            <td id="DAT"></td>
+        </tr></table>
+        <hr>
+        <table id="SPE"></table>
+        <hr>
+        <table><tr>
+            <td><b>Autor</b></td>
+            <td id="AUT" class="clickable"></td>
+        </tr></table>
+        <hr>
+        <table><tr>
+            <td><b>Laufzeit</b></td>
+            <td id="DUR"></td>
+        </tr></table>
+        <div id="LIN"></div>
+    </div>
+    <div id="CASTING" class="main" style="display:none">
+        <div class="chevron clickable" onclick="goBack()"></div>
+        <h4 id="speakers"></h4>
+        <hr>
+        <div id="roles"></div>
+    </div>
+</body>
+
+<script>
+    let E = Object.assign({}, ...{{E|safe}}.map((x) => ({[x.NUM]: x})));  // create dictionary from array
+    let keys = {{E|safe}}.map(x => x.NUM);
+
+    function randomChoice() {
+        var randomChoice = keys[Math.floor(Math.random() * keys.length)]
+        openTitle(randomChoice)
+    }
+
+    function openTitle(x) {
+        localStorage.setItem("lastEpisode", x);  // store for page reload
+
+        document.getElementById('CASTING').style.display = "none";
+        document.getElementById('CONTENT').style.display = "block";
+        document.getElementById('CONTENT').scrollTop = 0;
+
+        document.getElementById('COV').src = "/static/core/cover/" + x + ".jpg";
+        document.getElementById('SUM').innerHTML = E[x]['SUM'];
+        document.getElementById('DAT').innerHTML = E[x]['DAT'];
+        document.getElementById('SPE').innerHTML = getSpeakers(E[x]['SPE']);
+        document.getElementById('AUT').innerHTML = E[x]['AUT'];
+        document.getElementById('AUT').setAttribute('onclick', 'search("' + E[x]['AUT'] + '", "AUT")');
+        document.getElementById('DUR').innerHTML = E[x]['DUR'] + " min";
+        document.getElementById('PLAY').innerHTML = E[x]['TRA'] ? "<audio controls autoplay preload='auto'><source src=" + E[x]['TRA'] + " type='audio/mpeg'></audio>" : "";
+        document.getElementById('LIN').innerHTML = E[x]['LIN'] ? `<hr><span class="clickable" data-bs-toggle="tooltip" data-bs-placement="right" title="Download MP3" onclick="downloadMP3('${E[x]['LIN']}')"><img class="icon zoom" src="{% static 'core/cassette.png' %}"></span>` : "";
+
+        enableTooltips();
+    }
+
+    function getSpeakers(roleAndSpeakerArray) {
+        var rows = [];
+        for (var i = 0; i < roleAndSpeakerArray.length; i++) {
+            var [role, speakers] = roleAndSpeakerArray[i].split(' | ');
+            var speakerArray = speakers.split(',')
+            for (var j = 0; j < speakerArray.length; j++) {
+                var onClick = 'search("' + speakerArray[j] + '", "SPE")'
+                speakerArray[j] = "<span class='clickable' onclick='" + onClick + "'>" + reduceOpacityIfNeeded(speakerArray[j]) + "</span>"
+            }
+            var col1 = "<td class='hide-on-mobile'>" + (i == 0 ? "<b>Sprecher</b>" : "") +  "</td>"
+            var col2 = "<td>" + reduceOpacityIfNeeded(role) + "</td>"
+            var col3 = "<td>" + speakerArray.join(', ') + "</td>"
+            rows.push("<tr>" + col1 + col2 + col3 + "</tr>")
+        }
+        return rows.join('')
+    }
+
+    function reduceOpacityIfNeeded(x) {
+        for (const ch of [', ', ' ('])
+            if (x.includes(ch)) {
+                var arr = x.split(ch);
+                return arr[0] + "<span class='reduce-opacity'>" + ch + arr.slice(1).join() + "</span>"
+        }
+        return x
+    }
+
+    function downloadMP3(url) {
+        window.open(url, '_blank').focus();
+    }
+
+    function goBack() {
+        document.getElementById("CONTENT").style.display = "block";
+        document.getElementById("CASTING").style.display = "none";
+    }
+
+    function changeCover(x) {
+        let grayscale = parseInt(document.getElementById("cover" + x).style.filter.replace(/\D/g, ""));
+        document.getElementById("cover" + x).style.filter = "grayscale(" + (100 - grayscale).toString() + "%)";
+
+        let data = new FormData();
+        data.append('NUM', x);
+
+        fetch('', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: data,
+        })
+    }
+
+    function search(n, type) {
+        document.getElementById("CONTENT").style.display = "none";
+        document.getElementById("CASTING").style.display = "block";
+
+        var [n, n2] = n.includes('(') ? [n.split(' (')[0], n.split(' (')[1].slice(0, -1)] : [n, '']
+
+        var arr = []
+        for (const x of keys) {
+            if (type == 'SPE') {
+                for (const roleAndSpeaker of E[x]['SPE']) {
+                    var [role, speakers] = roleAndSpeaker.split(' | ')
+                    if (speakers.includes(n) || (n2 && speakers.includes(n2))) {
+                        arr.push({'x': x, 'role': role})
+                    }
+                }
+            } else {
+                if (n == E[x]['AUT']) {
+                    arr.push({'x': x})
+                }
+            }
+        }
+
+        var rows = []
+        for (const a of arr) {
+            var thumbnail = "<img src='/static/core/thumbnails/" + a.x + ".jpg' width='20' height='20'>"
+            var col1 = "<td style='width:30px'>" + thumbnail + "</td>"
+            var onClick = "openTitle('" + a.x + "')"
+            var col2 = "<td class='clickable' style='width:40px' onclick=" + onClick + ">" + a.x + "</td>"
+            var col3 = "<td class='clickable hide-on-mobile' onclick=" + onClick + ">" + '... ' + E[a.x]['TIT'] + "</td>"
+            var col4 = type == 'SPE' ? "<td>" + reduceOpacityIfNeeded(a.role) + "</td>" : ""
+            rows.push("<tr style='height:25px'>" + col1 + col2 + col3 + col4 + "</tr>")
+        }
+
+        document.getElementById('speakers').innerHTML = n + " (" + rows.length + ")"
+        document.getElementById('roles').innerHTML = "<table>" + rows.join('') + "</table>"
+    }
+
+    function enableTooltips() {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    }
+
+    document.addEventListener('DOMContentLoaded', function(event) {
+        var episode = localStorage.getItem("lastEpisode")
+        openTitle(episode ? episode : '001')
+        document.getElementById('logo').className = 'clickable';
+        document.getElementById('logo').setAttribute('onclick', 'randomChoice()');
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,164 @@
+@media screen {
+  body {
+    font-size: 10pt;
+  }
+
+  hr {
+    color: #fefefe;
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border-style: inset;
+    border-width: 1px;
+  }
+
+  .main {
+    float: right;
+    padding-right: 20px;
+    width: calc(100vw - 300px);
+    height: calc(100vh - 90px);
+    overflow: auto;
+    scrollbar-color: #687279 #14191c;
+  }
+
+  #logout {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  #logout {
+    cursor: pointer;
+  }
+
+  .zoom {
+    transition: transform .1s;
+  }
+
+  .zoom:hover {
+    transform: scale(1.1);
+  }
+
+  audio {
+    position: absolute;
+    top: 16px;
+    left: 480px;
+    width: calc(100vw - 700px);
+    height: 32px;
+  }
+
+  .chevron {
+    position: absolute;
+    top: 91px;
+    left: 320px;
+    width: 16px;
+    height: 16px;
+    background: transparent;
+    border-top: 5px solid white;
+    border-right: 5px solid white;
+    transition: all 100ms ease;
+    transform: translate3d(0,-50%,0) rotate(-135deg);
+  }
+
+  .chevron:hover {
+    border-color: #b3cfdd;
+    box-shadow: 0.5vmin -0.5vmin 0 white;
+  }
+
+  .clickable:hover {
+    color: #b3cfdd;
+    cursor: pointer;
+  }
+
+  .icon {
+    color: #fefefe;
+    font-size: 18pt;
+    text-decoration: none;
+    filter: invert(1);
+    height: 30px;
+  }
+
+  .reduce-opacity {
+    opacity: 0.5;
+  }
+
+  .cover-image {
+    width: 220px;
+    max-width: 50%;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    float: left;
+  }
+
+  #CONTENT td {
+    width: 280px;
+  }
+
+  #CONTENT td:nth-child(1) {
+    width: 160px;
+  }
+
+  #CASTING {
+    padding-left: 64px;
+  }
+
+  #CASTING td {
+    width: 240px;
+  }
+
+  #NAV {
+    float: left;
+    width: 280px;
+    height: calc(100vh - 90px);
+    overflow: auto;
+    scrollbar-color: #687279 #14191c;
+  }
+
+  #NAV td {
+    padding-bottom: 10px;
+    height: 40px;
+    line-height: 140%;
+    width: 210px;
+  }
+
+  #NAV td:nth-child(1) {
+    width: 50px;
+  }
+
+  #SUM {
+    line-height: 140%;
+    padding-top: 20px;
+  }
+
+  @media only screen and (orientation : portrait) {
+    .hide-on-mobile {
+      display: none;
+    }
+
+    .main {
+      width: calc(100vw - 90px);
+    }
+
+    .reduce-opacity {
+      display: none;
+    }
+
+    .chevron {
+      left: 120px;
+    }
+
+    #NAV {
+      width: 80px;
+    }
+
+    #CONTENT td {
+      width: 160px;
+    }
+
+    #SUM {
+      padding-top: 0px;
+    }
+  }
+
+} /* end @media */
