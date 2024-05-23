@@ -1611,5 +1611,12 @@ E = [{'NUM': '001',
       'DAT': '22.03.2024',
       'SPE': ['Erzähler | Axel Milberg', 'Justus Jonas, Erster Detektiv | Oliver Rohrbeck', 'Peter Shaw, Zweiter Detektiv | Jens Wawrczeck', 'Bob Andrews, Recherchen und Archiv | Andreas Fröhlich', 'Clarissa Franklin | Judy Winter', 'Jack Cliffwater | Oliver Kalkofe', 'Holger Mahlich | Holger Mahlich', 'Mr. Bumblebee | Tim Grobe', 'Mrs. Evans | Merete Brettschneider', 'Inspektor Cotta | Holger Mahlich', 'Mr. Powers | Achim Buch', 'Robert Mayer | Tim Helsen', 'Polizist | John Wesley Zielmann', 'Polizistin | Merle Tucholka', 'Mrs. Smith | Sofie Grabbe'],
       'AUT': 'André Minninger',
-      'DUR': 84}
+      'DUR': 84},
+     {'NUM': '227',
+      'TIT': 'Melodie der Rache',
+      'SUM': 'In der Ferienanlage des ehemaligen Rockstars PJ gehen seltsame Dinge vor sich. In die Zimmer der Hotelgäste wird eingebrochen, doch die Diebe haben es nur auf die Andenkensammlung des Rockstars abgesehen. In jedem Zimmer stellt er ein Erinnerungsstück aus seiner Musikkarriere aus. Die drei ??? ziehen selbst in das Resort ein und stoßen auf ein dunkles Geheimnis aus der Vergangenheit.',
+      'DAT': '10.05.2024',
+      'SPE': ['Erzähler | Axel Milberg', 'Justus Jonas, Erster Detektiv | Oliver Rohrbeck', 'Peter Shaw, Zweiter Detektiv | Jens Wawrczeck', 'Bob Andrews, Recherchen und Archiv | Andreas Fröhlich', 'PJ | Hannes Hellmann', 'Liam | Nick Rom', 'Finn | John Wesley Zielmann', 'Beatrix | Alexandra Wilcke', 'Mrs. Haynes | Sandra Keck', 'Mr. Haynes | Jorg Asche', 'Chloe | Clara Körting', 'Wilfred | Michael Lott', 'Daniel | Stephan Zinggraf'],
+      'AUT': 'André Minninger',
+      'DUR': 66}
      ]
