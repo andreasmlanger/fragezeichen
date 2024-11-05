@@ -1632,7 +1632,7 @@ E = [{'NUM': '001',
       'DAT': '06.09.2024',
       'SPE': ['Erzähler | Axel Milberg', 'Justus Jonas, Erster Detektiv | Oliver Rohrbeck', 'Peter Shaw, Zweiter Detektiv | Jens Wawrczeck', 'Bob Andrews, Recherchen und Archiv | Andreas Fröhlich', 'Cornelius, Student | Woody Mues', 'Jayden Cummings | Sebastian König', 'Milanda, Studentin | Anneke Schwabe', 'Odette | Carla Becker', 'Dame | Luise Lunow', 'Hillman | Michael Baute', 'Nachbar | Christoph Landwehr', 'Inspektor Cotta | Holger Mahlich', 'Goodween | Andrè Minninger', '1. Student | Thomas Cronauge', '2. Student | David J. Becher'],
       'AUT': 'Hendrik Buchna',
-      'DUR': 0}, # TODO update!
+      'DUR': 79},
      {'NUM': '230',
       'TIT': 'Der Tag der Toten',
       'SUM': 'Ganz schön gruselig! Linus erzählt den drei ??? eine seltsame Geschichte: Seit einigen Tagen wird er von Skeletten verfolgt. Ein Skelett stand sogar mitten in der Nacht vor seinem Bett! Was wollen sie nur von ihm? Linus hat große Angst, verrückt zu werden. Ein klarer Fall für Justus, Jonas, Peter Shaw und Bob Andrews! Natürlich helfen sie dem verzweifelten jungen Mann. Die Spuren führen die Freunde auf den Friedhof. Finden sie heraus, wer Linus in den Wahnsinn treiben will?',
